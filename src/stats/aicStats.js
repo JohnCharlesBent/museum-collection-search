@@ -3,7 +3,7 @@
 import { getJson, centuryLabel } from './util.js';
 import { lookupGenders, summariseGender } from './gender.js';
 
-const BASE = import.meta.env?.DEV ? '/aic' : 'https://api.artic.edu';
+const BASE = '/aic'; // through the app's own server, as in src/api/aic.js
 const SEARCH = `${BASE}/api/v1/artworks/search`;
 const TOP_ARTISTS = 30;
 

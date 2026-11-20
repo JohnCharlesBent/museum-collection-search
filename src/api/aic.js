@@ -1,11 +1,12 @@
 // Art Institute of Chicago artworks search.
 // Queries are Elasticsearch queries sent as bracket-style URL parameters.
 
-// In development, go through the Vite proxy (see vite.config.js) so the
-// browser makes a same-origin request instead of a cross-site one.
-const API_BASE = import.meta.env?.DEV ? '/aic' : 'https://api.artic.edu';
+// Always requested through the app's own server: the Vite dev server in
+// development (vite.config.js) and Nginx in production (deploy/nginx-forge.conf),
+// because the Art Institute blocks requests made directly from web pages.
+const API_BASE = '/aic';
 const SEARCH_URL = `${API_BASE}/api/v1/artworks/search`;
-const IIIF_BASE = import.meta.env?.DEV ? '/iiif/2' : 'https://www.artic.edu/iiif/2';
+const IIIF_BASE = '/iiif/2';
 
 // The search API refuses requests past the first 10,000 results.
 const MAX_RESULTS = 10000;

@@ -9,16 +9,19 @@ export default defineConfig(({ mode }) => {
   // here, by the dev server, so it never reaches the browser.
   const env = loadEnv(mode, process.cwd(), '')
   const harvardKey = env.HARVARD_API_KEY
+  // In production the key lives in the Nginx config instead, so the build is
+  // told Harvard is available with HARVARD_ENABLED=true.
+  const harvardEnabled = Boolean(harvardKey) || env.HARVARD_ENABLED === 'true'
 
   return {
     plugins: [react(), tailwindcss()],
     define: {
-      // Tells the app whether to offer Harvard (true when a key is set).
-      'import.meta.env.VITE_HARVARD_ENABLED': JSON.stringify(harvardKey ? 'true' : 'false'),
+      // Tells the app whether to offer Harvard.
+      'import.meta.env.VITE_HARVARD_ENABLED': JSON.stringify(harvardEnabled ? 'true' : 'false'),
     },
     server: {
-      // In development, API requests go through the Vite server so the browser
-      // never makes a cross-site request (which AIC's bot protection blocks).
+      // In development, these API requests go through the Vite server. In
+      // production, Nginx does the same job (see deploy/nginx-forge.conf).
       proxy: {
         '/aic': {
           target: 'https://api.artic.edu',

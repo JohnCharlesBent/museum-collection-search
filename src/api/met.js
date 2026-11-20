@@ -1,7 +1,8 @@
 // The Met Collection API (https://metmuseum.github.io/).
 // Search returns only object IDs, so each result is fetched separately.
 
-const API_BASE = import.meta.env?.DEV ? '/met' : 'https://collectionapi.metmuseum.org';
+// Requested through the app's own server (Vite in development, Nginx in production).
+const API_BASE = '/met';
 // v1/search is retired; v1.1/search supports offset/limit paging.
 const SEARCH_URL = `${API_BASE}/public/collection/v1.1/search`;
 const OBJECT_URL = `${API_BASE}/public/collection/v1/objects`;

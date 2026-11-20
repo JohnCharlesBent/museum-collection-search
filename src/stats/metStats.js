@@ -3,7 +3,7 @@
 // downloading every object record, so the Met has no artist or gender stats.
 import { getJson, mapLimit, centuryLabel } from './util.js';
 
-const BASE = import.meta.env?.DEV ? '/met' : 'https://collectionapi.metmuseum.org';
+const BASE = '/met'; // through the app's own server, as in src/api/met.js
 const SEARCH = `${BASE}/public/collection/v1.1/search`;
 const API = `${BASE}/public/collection/v1`;
 

@@ -70,7 +70,7 @@ results between them, and interleaves the results.
 
 | Museum | API | Key | Notes |
 | --- | --- | --- | --- |
-| Art Institute of Chicago | [api.artic.edu](https://api.artic.edu/docs/) | No | Blocks requests made from web pages; goes through the dev-server proxy |
+| Art Institute of Chicago | [api.artic.edu](https://api.artic.edu/docs/) | No | Blocks requests made from web pages; goes through the app's server (Vite in development, Nginx in production) |
 | The Met | [Collection API](https://metmuseum.github.io/) | No | Search returns IDs only; each result is fetched separately. No style field |
 | Whitney | [whitney.org/api](https://whitney.org/about/website/api) | No | Gallery locations not recorded, only on view or not. No style field |
 | Getty | [Linked Art / SPARQL](https://data.getty.edu/museum/collection/docs/) | No | No text index, so title searches take several seconds. No style field |
@@ -82,19 +82,61 @@ where they have it, and otherwise from [Wikidata](https://www.wikidata.org/).
 
 ## Deploying
 
-`npm run build` produces a static site, but some museums need a server in
-front of them once the site is live:
+`npm run build` produces a static site in `dist/`. Three museums still need
+the server in front of them, exactly as the Vite dev server does in
+development:
 
-- **Art Institute of Chicago**: requests made directly from a web page are
-  blocked, so the deployed site needs a small proxy (as `vite.config.js` does
-  in development) for `/aic` and `/iiif`.
-- **Harvard**: the API key must be added by a server, never shipped to the
-  browser, so `/harvard` needs the same kind of proxy.
-- **The Met** is also proxied in development; check whether it allows direct
-  requests from your domain before relying on that.
-- The Whitney, the Getty and Cleveland allow requests straight from the page.
-- The host must send `/stats` to `index.html` (often called a single-page app
-  or "rewrite all to index.html" setting).
+- **Art Institute of Chicago** (`/aic`, `/iiif`): blocks requests made
+  directly from web pages.
+- **The Met** (`/met`): proxied for consistency with development.
+- **Harvard** (`/harvard`): the server adds the API key so it never reaches
+  the browser.
+
+The Whitney, the Getty and Cleveland are called straight from the page.
+[`deploy/nginx-forge.conf`](deploy/nginx-forge.conf) has the Nginx rules for
+all of this, plus single-page-app routing (so `/stats` works) and caching for
+built files.
+
+### Laravel Forge
+
+1. **Server.** Use an *App* or *Web* server; both come with Nginx and Node.js.
+   Vite needs Node 20.19 or later (`node -v` on the server).
+2. **Site.** Create a site from this GitHub repository, branch `main`. If
+   Forge offers a static or non-PHP project type, choose it. Under
+   **Advanced settings**, set the **web directory** to `/dist`. Leave
+   zero-downtime deployments and push to deploy on.
+3. **Deploy script.** Keep Forge's lines and add the build after
+   `cd $FORGE_RELEASE_DIRECTORY` (before `$ACTIVATE_RELEASE()`). Remove any
+   `composer install` line, since there's no PHP. The script should look like:
+
+   ```bash
+   $CREATE_RELEASE()
+
+   cd $FORGE_RELEASE_DIRECTORY
+
+   npm ci
+   npm run build
+
+   $ACTIVATE_RELEASE()
+   ```
+
+4. **Environment** (only if you use Harvard). In the site's environment
+   (`.env`), add `HARVARD_ENABLED=true` so the build includes Harvard. Don't put
+   the key here; it goes in the Nginx config.
+5. **Nginx.** Edit the site's Nginx configuration as described at the top of
+   [`deploy/nginx-forge.conf`](deploy/nginx-forge.conf): replace the
+   `location /` block, remove the PHP block, paste the API blocks, and fill in
+   your contact email and (optionally) Harvard key.
+6. **Deploy.** Click *Deploy now* (later pushes to `main` deploy
+   automatically). Visit the site's free `on-forge.com` domain, or add your own
+   domain and certificate under the site's domain settings.
+7. **Check.** Run a search with *All* selected and open `/stats`. If the Art
+   Institute's results fail while the others work, its bot protection may be
+   refusing your server; the Art Institute's engineering team
+   (engineering@artic.edu) can help.
+
+Harvard allows 2,500 requests a day. Each visit to Harvard's stats uses about
+six, and stats are cached in each visitor's browser for a day.
 
 ## Data and terms
 

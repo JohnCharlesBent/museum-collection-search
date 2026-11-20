@@ -1,8 +1,9 @@
 // Harvard Art Museums API (https://github.com/harvardartmuseums/api-docs).
-// Every request needs an API key. The key lives in .env.local as
-// HARVARD_API_KEY and is added by the Vite dev server (see vite.config.js),
-// so it never reaches the browser. Harvard only appears in the app when a
-// key is set. Terms: non-commercial use, at most 2,500 requests a day.
+// Every request needs an API key, which is added by the app's own server so it
+// never reaches the browser: the Vite dev server in development (HARVARD_API_KEY
+// in .env.local) and Nginx in production (deploy/nginx-forge.conf). Harvard only
+// appears in the app when the build knows a key is configured (HARVARD_API_KEY
+// or HARVARD_ENABLED=true). Terms: non-commercial use, at most 2,500 requests a day.
 
 export const HARVARD_ENABLED = import.meta.env?.VITE_HARVARD_ENABLED === 'true';
 export const HARVARD_API = '/harvard';
