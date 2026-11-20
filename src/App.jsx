@@ -176,7 +176,7 @@ function App() {
               <button
                 type="button"
                 onClick={() => setRetryCount((n) => n + 1)}
-                className="mt-4 rounded-lg bg-ink px-4 py-2 text-sm font-medium text-white"
+                className="mt-4 rounded-lg bg-ink px-4 py-2 text-sm font-medium text-on-ink"
               >
                 Try again
               </button>

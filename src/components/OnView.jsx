@@ -43,8 +43,10 @@ export function OnViewStatus({ artwork }) {
     return (
         <p className="inline-flex items-center gap-2 rounded-full bg-mat px-3 py-1.5 text-sm font-medium">
             <Dot filled />
-            On view{artwork.location ? ` in ${artwork.location}` : ""}
-            <span className="font-normal text-muted">{artwork.location ? `, ${museum}` : ` at ${museum}`}</span>
+            <span>
+                On view{artwork.location ? ` in ${artwork.location}` : ""}
+                <span className="font-normal text-muted">{artwork.location ? `, ${museum}` : ` at ${museum}`}</span>
+            </span>
         </p>
     );
 }

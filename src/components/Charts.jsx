@@ -52,7 +52,7 @@ export function TimeColumns({ rows, caption }) {
                             className="group relative flex h-full flex-1 flex-col justify-end"
                             title={`${row.label}: ${fmt(row.value)} works`}
                         >
-                            <span className="pointer-events-none absolute -top-1 left-1/2 hidden -translate-x-1/2 -translate-y-full whitespace-nowrap rounded bg-ink px-2 py-1 text-xs text-white group-hover:block">
+                            <span className="pointer-events-none absolute -top-1 left-1/2 hidden -translate-x-1/2 -translate-y-full whitespace-nowrap rounded bg-ink px-2 py-1 text-xs text-on-ink group-hover:block">
                                 {row.label}: {fmt(row.value)}
                             </span>
                             {row === peak && (
@@ -129,7 +129,8 @@ export function GenderSplit({ gender, artistsLabel, worksLabel = "Their works", 
                                         style={{
                                             width: `${(value / row.total) * 100}%`,
                                             background: p.color,
-                                            color: p.key === "woman" || p.key === "man" ? "#fff" : "var(--color-ink)",
+                                            // Grey segments keep dark text in both themes.
+                                            color: p.key === "woman" || p.key === "man" ? "#fff" : "#1c1d21",
                                         }}
                                         title={`${p.label}: ${fmt(value)} (${pct(value, row.total)})`}
                                     >

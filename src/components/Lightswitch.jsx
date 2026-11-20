@@ -9,10 +9,10 @@ export function Lightswitch({ checked, onChange }) {
         >
             <span
                 aria-hidden="true"
-                className={`relative h-5 w-9 rounded-full transition-colors ${checked ? "bg-ink" : "bg-zinc-300"}`}
+                className={`relative h-5 w-9 rounded-full transition-colors ${checked ? "bg-ink" : "bg-muted/40"}`}
             >
                 <span
-                    className={`absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform motion-reduce:transition-none ${checked ? "translate-x-4" : ""}`}
+                    className={`absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-paper shadow-sm transition-transform motion-reduce:transition-none ${checked ? "translate-x-4" : ""}`}
                 />
             </span>
             Only works on view now

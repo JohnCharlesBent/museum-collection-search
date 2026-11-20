@@ -1,32 +1,52 @@
 @import "tailwindcss";
 
+/* Colors are named by role, so dark mode only has to swap their values. */
 @theme {
   --font-ui: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
   --font-title: "Newsreader", ui-serif, Georgia, serif;
-  --color-ink: #1c1d21;
-  --color-muted: #686b73;
-  --color-line: #e3e3e6;
-  --color-mat: #f2f2f3;
-  --color-accent: #a4123f;
+  --color-paper: #ffffff;   /* page and panel background */
+  --color-ink: #1c1d21;     /* main text, dark-filled buttons */
+  --color-on-ink: #ffffff;  /* text on dark-filled (bg-ink) buttons */
+  --color-muted: #686b73;   /* secondary text */
+  --color-line: #e3e3e6;    /* borders and rules */
+  --color-mat: #f2f2f3;     /* image mats, placeholders, hover fills */
+  --color-accent: #a4123f;  /* search button, focus rings, on-view dot */
+  --color-banner: #1c1d21;  /* header background */
 }
 
-/* The app is light-only: white even when the computer is in dark mode. */
+/* Dark mode: chosen with the header toggle, which sets data-theme on <html>. */
+:root[data-theme="dark"] {
+  --color-paper: #16171a;
+  --color-ink: #e8e8ea;
+  --color-on-ink: #16171a;
+  --color-muted: #a0a3aa;
+  --color-line: #34363c;
+  --color-mat: #202226;
+  --color-accent: #c2345f;
+  --color-banner: #0e0f11;
+}
+
+/* The page follows the chosen theme, not the computer's setting, so browsers
+   don't darken or lighten it on their own. */
 html {
   color-scheme: light;
-  background: #fff;
+  background: var(--color-paper);
   scroll-padding-top: 1.5rem;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
-  background: #fff;
+  background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
 }
 
 dialog::backdrop {
-  background: rgb(28 29 33 / 0.55);
+  background: rgb(10 10 12 / 0.6);
 }
 
 /* Artwork descriptions come from the API as HTML. */

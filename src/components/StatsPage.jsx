@@ -105,7 +105,7 @@ export function StatsPage() {
                                     role="radio"
                                     aria-checked={museum === key}
                                     onClick={() => chooseMuseum(key)}
-                                    className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${focusRing} ${museum === key ? "bg-ink text-white" : "text-muted hover:bg-mat hover:text-ink"}`}
+                                    className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${focusRing} ${museum === key ? "bg-ink text-on-ink" : "text-muted hover:bg-mat hover:text-ink"}`}
                                 >
                                     {SOURCES[key].name}
                                 </button>
@@ -127,7 +127,7 @@ export function StatsPage() {
                         <button
                             type="button"
                             onClick={resync}
-                            className={`mt-4 rounded-lg bg-ink px-4 py-2 text-sm font-medium text-white ${focusRing}`}
+                            className={`mt-4 rounded-lg bg-ink px-4 py-2 text-sm font-medium text-on-ink ${focusRing}`}
                         >
                             Try again
                         </button>

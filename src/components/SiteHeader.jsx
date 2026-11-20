@@ -1,4 +1,5 @@
 import { SOURCES } from "../api/search.js";
+import { ThemeToggle } from "./ThemeToggle";
 
 const museums = Object.values(SOURCES).map((m) => m.short);
 const museumList = museums.length > 1
@@ -12,8 +13,8 @@ const links = [
 
 export function SiteHeader({ current, onHome }) {
     return (
-        <header className="bg-ink text-white">
-            <div className="mx-auto flex max-w-7xl flex-wrap items-baseline gap-x-6 gap-y-2 px-6 py-5">
+        <header className="border-b border-line bg-banner text-white">
+            <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-4">
                 <div className="flex items-baseline gap-3">
                     <a
                         href="/"
@@ -26,7 +27,8 @@ export function SiteHeader({ current, onHome }) {
                         {museumList}
                     </span>
                 </div>
-                <nav aria-label="Main" className="flex gap-4 sm:ml-auto">
+                <div className="ml-auto flex items-center gap-4">
+                <nav aria-label="Main" className="flex gap-4">
                     {links.map((link) => (
                         <a
                             key={link.href}
@@ -38,6 +40,8 @@ export function SiteHeader({ current, onHome }) {
                         </a>
                     ))}
                 </nav>
+                <ThemeToggle />
+                </div>
             </div>
         </header>
     );

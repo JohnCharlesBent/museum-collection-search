@@ -62,14 +62,14 @@ export function ArtworkDialog({ artwork, onClose, onArtist, onStyle }) {
             ref={ref}
             onClose={onClose}
             onClick={handleClick}
-            className="m-auto max-h-[92vh] w-[min(1100px,94vw)] overflow-hidden rounded-2xl bg-white p-0 text-ink shadow-2xl"
+            className="m-auto max-h-[92vh] w-[min(1100px,94vw)] overflow-hidden rounded-2xl bg-paper p-0 text-ink shadow-2xl"
         >
             {artwork && (
                 <button
                     type="button"
                     onClick={() => ref.current.close()}
                     aria-label="Close"
-                    className={`absolute right-3 top-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-muted shadow-sm hover:bg-mat hover:text-ink ${focusRing}`}
+                    className={`absolute right-3 top-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-paper/90 text-muted shadow-sm hover:bg-mat hover:text-ink ${focusRing}`}
                 >
                     <svg aria-hidden="true" viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
                         <path d="m5 5 10 10M15 5 5 15" strokeLinecap="round" />
@@ -112,7 +112,7 @@ export function ArtworkDialog({ artwork, onClose, onArtist, onStyle }) {
                                 <button
                                     type="button"
                                     onClick={() => onArtist(artwork)}
-                                    className={`rounded-lg bg-ink px-4 py-2.5 text-sm font-medium text-white ${focusRing}`}
+                                    className={`rounded-lg bg-ink px-4 py-2.5 text-sm font-medium text-on-ink ${focusRing}`}
                                 >
                                     More by {artwork.artist}
                                 </button>
