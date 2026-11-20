@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --font-ui: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-title: "Newsreader", ui-serif, Georgia, serif;
+  --color-ink: #1c1d21;
+  --color-muted: #686b73;
+  --color-line: #e3e3e6;
+  --color-mat: #f2f2f3;
+  --color-accent: #a4123f;
+}
+
+/* The app is light-only: white even when the computer is in dark mode. */
+html {
+  color-scheme: light;
+  background: #fff;
+  scroll-padding-top: 1.5rem;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--color-ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+dialog::backdrop {
+  background: rgb(28 29 33 / 0.55);
+}
+
+/* Artwork descriptions come from the API as HTML. */
+.prose-description p + p {
+  margin-top: 0.75rem;
+}
+.prose-description a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
